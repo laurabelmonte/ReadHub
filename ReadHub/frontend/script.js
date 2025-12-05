@@ -665,8 +665,6 @@ async function carregarRecomendacoes() {
 }
 
 /* ---------------- Relatórios ---------------- */
-
-// Variáveis globais para armazenar os dados atuais (para o download)
 let dadosRelatorioAtrasos = [];
 let dadosRelatorioTop = [];
 
@@ -678,13 +676,12 @@ async function gerarRelatorioAtrasos() {
     if(!tabela) return;
 
     try {
-        // Chama a rota específica criada no backend
         const response = await fetch(`${API_URL}/reports/overdue`);
         if (!response.ok) throw new Error("Erro ao buscar dados do servidor.");
 
         dadosRelatorioAtrasos = await response.json();
         
-        tbody.innerHTML = ""; // Limpa tabela anterior
+        tbody.innerHTML = ""; 
 
         if (dadosRelatorioAtrasos.length === 0) {
             tabela.style.display = 'none';
@@ -693,7 +690,6 @@ async function gerarRelatorioAtrasos() {
             return;
         }
 
-        // Renderiza as linhas usando os dados do Schema ReportOverdue
         dadosRelatorioAtrasos.forEach(item => {
             const row = `
                 <tr>
@@ -739,7 +735,6 @@ async function gerarTopEmprestados() {
             return;
         }
 
-        // Renderiza as linhas usando o Schema ReportTopBook
         dadosRelatorioTop.forEach((item, index) => {
             const row = `
                 <tr>
@@ -780,11 +775,11 @@ function baixarRelatorio(tipo) {
 
     // Converte JSON para CSV
     const csvRows = [];
-    csvRows.push(headers.join(',')); // Cabeçalho
+    csvRows.push(headers.join(',')); 
 
     for (const row of dados) {
         const values = Object.values(row).map(val => {
-            const escaped = ('' + val).replace(/"/g, '\\"'); // Escapa aspas
+            const escaped = ('' + val).replace(/"/g, '\\"');
             return `"${escaped}"`;
         });
         csvRows.push(values.join(','));
@@ -826,16 +821,14 @@ function imprimirRelatorio(tipo) {
 /* ---------------- Geração de PDF (jsPDF + AutoTable) ---------------- */
 
 function baixarPDF(tipo) {
-    // Verifica se a biblioteca foi carregada corretamente
     if (!window.jspdf) {
         alert("Erro: Biblioteca jsPDF não encontrada.");
         return;
     }
 
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF(); // Cria o documento PDF
+    const doc = new jsPDF(); 
 
-    // Configurações comuns (Logo, título, data)
     const dataAtual = new Date().toLocaleDateString('pt-BR');
     doc.setFontSize(18);
     doc.text("ReadHub - Sistema de Gestão", 14, 20);
@@ -852,7 +845,6 @@ function baixarPDF(tipo) {
         doc.setFontSize(14);
         doc.text("Relatório de Empréstimos em Atraso", 14, 40);
 
-        // Define as colunas e as linhas baseadas nos dados
         const colunas = ["Título do Livro", "Usuário", "Data Emp.", "Devolução", "Atraso (dias)"];
         const linhas = dadosRelatorioAtrasos.map(item => [
             item.book_title,
@@ -862,13 +854,12 @@ function baixarPDF(tipo) {
             item.days_overdue
         ]);
 
-        // Gera a tabela
         doc.autoTable({
             head: [colunas],
             body: linhas,
-            startY: 45, // Começa logo após o título
-            theme: 'striped', // Estilo zebrado
-            headStyles: { fillColor: [220, 53, 69] } // Cabeçalho vermelho para alertar atraso
+            startY: 45, 
+            theme: 'striped', 
+            headStyles: { fillColor: [220, 53, 69] } 
         });
 
         doc.save(`relatorio_atrasos_${dataAtual}.pdf`);
@@ -894,7 +885,7 @@ function baixarPDF(tipo) {
             body: linhas,
             startY: 45,
             theme: 'grid',
-            headStyles: { fillColor: [40, 167, 69] } // Cabeçalho verde
+            headStyles: { fillColor: [40, 167, 69] } 
         });
 
         doc.save(`relatorio_top_livros_${dataAtual}.pdf`);

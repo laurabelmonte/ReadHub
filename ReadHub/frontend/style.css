@@ -103,14 +103,13 @@ a:hover { text-decoration: underline; }
 /* give content spacing from footer */
 main, .conteudo { padding-bottom: 110px; }
 
-/* Atualize a seção .top-bar e .btn-voltar-topo no seu arquivo style.css */
 
 .top-bar {
-    position: relative;        /* Essencial para o botão 'absoluto' funcionar */
+    position: relative;        
     display: flex;
-    flex-direction: column;    /* Empilha Título e Input (se houver) */
-    align-items: center;       /* Centraliza horizontalmente o h1 e inputs */
-    justify-content: center;   /* Centraliza verticalmente */
+    flex-direction: column;    
+    align-items: center;       
+    justify-content: center;  
     
     background-color: var(--primary);
     color: white;
@@ -119,35 +118,30 @@ main, .conteudo { padding-bottom: 110px; }
     font-weight: bold;
     z-index: 5;
     min-height: 80px;
-    text-align: center;        /* Garante que o texto dentro do h1 fique centralizado */
+    text-align: center;        
 }
 
-/* Garante que o H1 não fique por cima do botão em telas pequenas */
 .top-bar h1 {
     margin: 0;
     width: 100%;
-    padding: 0 50px; /* Adiciona espaço nas laterais para o texto não tocar no botão */
+    padding: 0 50px;
 }
 
 .btn-voltar-topo {
-    /* Posicionamento Absoluto: Tira o botão do fluxo para não empurrar o texto */
     position: absolute;
-    left: 20px;                /* Cola na esquerda */
-    top: 50%;                  /* Posiciona no meio vertical da barra */
-    transform: translateY(-50%); /* Ajuste fino para ficar exato no centro vertical */
+    left: 20px;                
+    top: 50%;                 
+    transform: translateY(-50%); 
     
-    /* Visual */
     background-color: #ffffff;
     color: #000000;
     
-    /* Tamanho */
     width: 40px;
     height: 40px;
     font-size: 24px;
     border-radius: 50%;
     border: none;
     
-    /* Centralizar a seta dentro da bolinha */
     display: flex;
     align-items: center;
     justify-content: center;
