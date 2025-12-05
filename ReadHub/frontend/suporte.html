@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Suporte - ReadHub</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="top-bar">
+    <h1>Suporte</h1>
+  </header>
+
+  <main class="suporte-container" style="padding:30px;">
+    <section class="suporte-form" style="max-width:800px;margin:0 auto;">
+      <h2>Fale com a equipe</h2>
+      <p>Descreva o problema ou dúvida. Nós receberemos aqui (simulado) e você poderá ver o histórico de tickets.</p>
+
+      <label for="suporte-nome">Nome</label><br>
+      <input id="suporte-nome" type="text" placeholder="Seu nome" />
+
+      <label for="suporte-email">E-mail</label><br>
+      <input id="suporte-email" type="email" placeholder="seu@email.com" />
+
+      <label for="suporte-assunto">Assunto</label><br>
+      <input id="suporte-assunto" type="text" placeholder="Ex: Erro ao salvar livro" />
+
+      <label for="suporte-mensagem">Mensagem</label><br>
+      <textarea id="suporte-mensagem" rows="6" placeholder="Descreva aqui..."></textarea>
+
+      <div style="margin-top:12px;">
+        <button onclick="enviarSuporte()" class="btn-reservar">Enviar</button>
+        <button onclick="limparFormularioSuporte()" class="btn-voltar" style="margin-left:8px;">Limpar</button>
+      </div>
+    </section>
+
+    <hr style="margin:40px 0;">
+
+    <section class="suporte-historico" style="max-width:1000px;margin:0 auto;">
+      <h2>Histórico de mensagens</h2>
+      <div id="lista-suporte">Nenhuma mensagem enviada ainda.</div>
+    </section>
+  </main>
+
+  <footer class="menu">
+    <button onclick="abrir('perfil.html')">Perfil</button>
+    <button onclick="abrir('prateleira.html')">Minha prateleira</button>
+    <button onclick="abrir('favoritos.html')">Favoritos</button>
+    <button onclick="abrir('emprestimos.html')">Empréstimos</button>
+    <button onclick="abrir('suporte.html')">Suporte</button>
+    <button onclick="abrir('dashboard.html')">Início</button>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

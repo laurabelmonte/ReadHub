@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Perfil do Usuário - ReadHub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <h1>Meu Perfil</h1>
+  </header>
+
+  <main class="perfil-container">
+    <div class="perfil-card">
+      <img src="assets/user.png" alt="Usuário" class="perfil-foto">
+
+      <h2 id="perfil-nome">Ana Paula</h2>
+      <p id="perfil-email">ana@example.com</p>
+
+      <div class="perfil-acoes">
+        <button class="btn-alterar" onclick="abrirAlterarSenha()">Alterar Senha</button>
+        <button class="btn-sair" onclick="sair()">Sair</button>
+      </div>
+    </div>
+
+    <div id="alterar-senha" class="senha-card" style="display:none;">
+      <h3>Alterar Senha</h3>
+      <input type="password" id="senha-atual" placeholder="Senha atual">
+      <input type="password" id="nova-senha" placeholder="Nova senha">
+      <input type="password" id="confirma-senha" placeholder="Confirmar nova senha">
+      <button class="btn-reservar" onclick="confirmarAlteracao()">Confirmar</button>
+      <button class="btn-voltar" onclick="cancelarAlteracao()">Cancelar</button>
+    </div>
+  </main>
+
+  <footer class="menu">
+    <button onclick="abrir('perfil.html')">Perfil</button>
+    <button onclick="abrir('prateleira.html')">Minha prateleira</button>
+    <button onclick="abrir('favoritos.html')">Favoritos</button>
+    <button onclick="abrir('emprestimos.html')">Empréstimos</button>
+    <button onclick="abrir('suporte.html')">Suporte</button>
+    <button onclick="abrir('dashboard.html')">Início</button>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

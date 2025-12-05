@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Relatórios - ReadHub</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .relatorios-container { padding: 30px; }
+    .relatorio-card { background:#fff; padding:20px; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06); margin-bottom:20px;}
+    .relatorio-actions { margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;}
+    .relatorio-table { width:100%; border-collapse:collapse; margin-top:10px; }
+    .relatorio-table th, .relatorio-table td { padding:8px 10px; border-bottom:1px solid #eee; text-align:left; }
+    .relatorio-header { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .btn { background:#007bff; color:#fff; border:none; padding:8px 12px; border-radius:6px; cursor:pointer; }
+    .btn.white { background:#fff; color:#007bff; border:1px solid #007bff; }
+  </style>
+</head>
+<body>
+  <header class="top-bar"><h1>Relatórios</h1></header>
+
+  <main class="relatorios-container">
+    <div class="relatorio-card" id="rel-atr-header">
+      <div class="relatorio-header">
+        <div>
+          <h2>Empréstimos em Atraso</h2>
+          <p>Lista de empréstimos cujo prazo de devolução já passou (não devolvidos).</p>
+        </div>
+        <div>
+          <button class="btn" onclick="gerarRelatorioAtrasos()">Gerar</button>
+          <button class="btn white" onclick="baixarRelatorio('atrasos')">Baixar CSV</button>
+          <button class="btn white" onclick="baixarRelatorioJson('atrasos')">Baixar JSON</button>
+          <button class="btn white" onclick="imprimirRelatorio('atrasos')">Imprimir / PDF</button>
+        </div>
+      </div>
+
+      <table id="tabela-atrasos" class="relatorio-table" style="display:none;">
+        <thead><tr><th>Título</th><th>Usuário</th><th>Empréstimo</th><th>Devolução prevista</th><th>Dias em atraso</th></tr></thead>
+        <tbody></tbody>
+      </table>
+
+      <p id="msg-atrasos" style="margin-top:12px;color:#666;">Clique em "Gerar" para ver o relatório.</p>
+    </div>
+
+    <div class="relatorio-card">
+      <div class="relatorio-header">
+        <div>
+          <h2>Top Livros Emprestados</h2>
+          <p>Livros mais emprestados (contagem geral).</p>
+        </div>
+        <div>
+          <button class="btn" onclick="gerarTopEmprestados()">Gerar</button>
+          <button class="btn white" onclick="baixarRelatorio('top')">Baixar CSV</button>
+          <button class="btn white" onclick="baixarRelatorioJson('top')">Baixar JSON</button>
+          <button class="btn white" onclick="imprimirRelatorio('top')">Imprimir / PDF</button>
+        </div>
+      </div>
+
+      <table id="tabela-top" class="relatorio-table" style="display:none;">
+        <thead><tr><th>Posição</th><th>Título</th><th>Quantidade de empréstimos</th></tr></thead>
+        <tbody></tbody>
+      </table>
+
+      <p id="msg-top" style="margin-top:12px;color:#666;">Clique em "Gerar" para ver o relatório.</p>
+    </div>
+  </main>
+
+  <footer class="menu">
+    <button onclick="abrir('perfil.html')">Perfil</button>
+    <button onclick="abrir('prateleira.html')">Minha prateleira</button>
+    <button onclick="abrir('favoritos.html')">Favoritos</button>
+    <button onclick="abrir('emprestimos.html')">Empréstimos</button>
+    <button onclick="abrir('dashboard.html')">Início</button>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+  </script>
+</body>
+</html>

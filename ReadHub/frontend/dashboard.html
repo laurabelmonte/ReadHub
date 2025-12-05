@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>ReadHub - Início</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <h1>Seja bem-vindo ao acervo digital!</h1>
+  </header>
+
+  <main class="dashboard">
+    <div class="card" onclick="abrir('recomendacoes.html')">
+      <img src="assets/recomendacoes.png" alt="Recomendações">
+      <p>Recomendações</p>
+    </div>
+
+    <div class="card" onclick="abrir('relatorios.html')">
+      <img src="assets/medalha.png" alt="Relatórios">
+      <p>Relatórios</p>
+    </div>
+
+    <div class="card" onclick="abrir('catalogo.html')">
+      <img src="assets/catalogo.png" alt="Catálogo">
+      <p>Catálogo</p>
+    </div>
+    
+    <div class="card" onclick="abrir('meuslivros.html')">
+      <img src="assets/livros.png" alt="Meus Livros">
+      <p>Meus Livros</p>
+    </div>
+  </main>
+
+  <footer class="menu">
+    <button onclick="abrir('perfil.html')">Perfil</button>
+    <button onclick="abrir('prateleira.html')">Minha prateleira</button>
+    <button onclick="abrir('favoritos.html')">Favoritos</button>
+    <button onclick="abrir('emprestimos.html')">Empréstimos</button>
+    <button onclick="abrir('suporte.html')">Suporte</button>
+    <button onclick="abrir('dashboard.html')">Início</button>
+    <button onclick="abrir('meuslivros.html')">Meus Livros</button>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

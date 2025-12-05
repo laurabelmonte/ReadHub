@@ -1,0 +1,323 @@
+/* Base */
+:root{
+  --primary:#007bff;
+  --primary-dark:#0056b3;
+  --muted:#f4f4f4;
+  --card-bg:#ffffff;
+  --danger:#dc3545;
+}
+
+*{box-sizing:border-box}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: var(--muted);
+  -webkit-app-region: no-drag;
+  color: #222;
+}
+
+/* REMOVE QUALQUER ÁREA DRAG DO APP */
+* {
+  -webkit-app-region: no-drag !important;
+}
+
+
+/* Inputs / Buttons (base) */
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 14px;
+}
+
+button {
+  background-color: var(--primary);
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:hover { background-color: var(--primary-dark); }
+
+a { color: var(--primary); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* Top bar / header */
+.top-bar {
+  background-color: var(--primary);
+  color: white;
+  text-align: center;
+  padding: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  position: relative;
+  z-index: 5;
+}
+
+/* Dashboard */
+.dashboard {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 60px;
+  gap: 20px;
+}
+
+.card {
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  width: 160px;
+}
+
+.card:hover { transform: scale(1.04); }
+
+.card img { width: 100px; height: 100px; object-fit: contain; }
+
+/* Footer menu */
+.menu, .rodape {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 64px;
+  background-color: var(--primary);
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+  padding: 8px 20px;
+  z-index: 9000;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+}
+
+.menu button, .rodape button {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.menu button:hover, .rodape button:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+/* give content spacing from footer */
+main, .conteudo { padding-bottom: 110px; }
+
+/* Catalogo */
+.top-bar input[type="text"] {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 20px;
+  width: 60%;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  text-align: center;
+}
+
+.catalogo {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 40px;
+  gap: 25px;
+}
+
+.livro {
+  width: 130px;
+  text-align: center;
+}
+
+.livro img {
+  width: 90px;
+  height: 130px;
+  border-radius: 6px;
+  object-fit: cover;
+  transition: transform .15s;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+.livro img:hover { transform: scale(1.05); }
+.livro p { margin-top: 8px; font-size: 14px; }
+
+/* Detalhes do Livro */
+.detalhes-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 40px 80px;
+}
+
+.detalhes-container img {
+  width: 220px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.livro-info { flex:1; }
+.livro-info h2 { margin-bottom: 10px; font-size: 22px; }
+.livro-info p { font-size:16px; line-height:1.6; margin-bottom:15px; }
+
+.btn-reservar {
+  padding: 12px 22px;
+  border-radius: 8px;
+  font-size: 16px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+}
+.btn-reservar:hover { background: var(--primary-dark); }
+
+/* Reserva */
+.reserva-container { padding: 40px; display:flex; flex-direction:column; align-items:center; gap:20px; }
+.livro-reserva img { width: 180px; height: 250px; border-radius:8px; box-shadow:0 4px 10px rgba(0,0,0,0.12); }
+.form-reserva { width: 320px; display:flex; flex-direction:column; gap:12px; }
+
+/* Prateleira / itens */
+.prateleira-container { padding: 40px; display:flex; flex-direction:column; align-items:center; }
+.prateleira-lista { display:flex; flex-wrap:wrap; gap:20px; justify-content:center; width:100%; }
+.livro-item {
+  width:150px; background:var(--card-bg); padding:10px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.08); text-align:center;
+}
+.livro-item img { width:100px; height:140px; object-fit:cover; border-radius:6px; }
+.livro-item p { font-size:14px; margin:8px 0; }
+
+/* Empréstimos */
+.emprestimos-container { padding:40px; display:flex; flex-direction:column; align-items:center; }
+.emprestimos-lista { width:90%; max-width:700px; display:flex; flex-direction:column; gap:12px; }
+
+/* Perfil */
+.perfil-container { padding:50px; display:flex; flex-direction:column; align-items:center; }
+.perfil-card { width:320px; background:var(--card-bg); padding:30px; border-radius:12px; text-align:center; box-shadow:0 4px 8px rgba(0,0,0,0.08); }
+.perfil-foto { width:100px; height:100px; border-radius:50%; margin-bottom:12px; }
+.perfil-acoes { display:flex; flex-direction:column; gap:8px; }
+.btn-sair { background: var(--danger); }
+.btn-sair:hover { background: #a71d2a; }
+
+/* Cadastro */
+.cadastro-container { height:90vh; display:flex; align-items:center; justify-content:center; }
+.cadastro-card { width:320px; padding:36px; background:var(--card-bg); border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.06); }
+.cadastro-card h2 { color:#333; margin-bottom:12px; }
+.cadastro-card input { width:100%; }
+
+/* Login */
+body.login-bg { background-color: var(--primary); color: white; }
+.login-box { width:320px; padding:36px; background:var(--card-bg); border-radius:12px; box-shadow:0 6px 18px rgba(0,0,0,0.12); text-align:center; }
+.login-box h1 { color:var(--primary); margin-bottom:8px; }
+.btn-entrar { width:100%; padding:10px; }
+
+/* Relatórios*/
+.relatorios-container { padding:30px; }
+.relatorio-card { background:var(--card-bg); padding:20px; border-radius:10px; box-shadow:0 6px 18px rgba(0,0,0,0.06); margin-bottom:20px; }
+.relatorio-actions { margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; }
+
+/* Suporte */
+.suporte-container { padding:30px; min-height:calc(100vh - 120px); }
+.ticket-card button { background:var(--primary); color:#fff; }
+
+/* Recomendações */
+.recomendacao-card { width:160px; padding:12px; background:var(--card-bg); border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.08); text-align:center; }
+.recomendacao-card img { width:120px; height:160px; object-fit:cover; border-radius:6px; }
+
+/* Helpers / electron-safe */
+header, footer, input, button, a { -webkit-app-region: no-drag; }
+
+/* Responsividade básica */
+@media (max-width: 800px) {
+  .dashboard { flex-direction:column; padding:30px; }
+  .detalhes-container { flex-direction:column; padding:20px; }
+  .top-bar input[type="text"] { width: 80%; }
+}
+
+/* ==== FIX: garantir inputs/campos clicáveis no Electron ==== */
+input, textarea, select, button {
+  -webkit-app-region: no-drag !important;   
+  pointer-events: auto !important;          
+  position: relative !important;
+  z-index: 99999 !important;
+}
+
+/* evita que um header/overlay global capture cliques
+   (caso você tenha um .top-bar ou .overlay global) */
+.top-bar, header, .overlay, .fullscreen-overlay {
+  pointer-events: auto;     /* se header precisar de cliques, mantém normalmente */
+  -webkit-app-region: no-drag; /* se estava como drag, evita interferência */
+}
+
+/* Se você tem um footer fixo que cobre: */
+.menu, .rodape {
+  pointer-events: auto !important;
+  -webkit-app-region: no-drag !important;
+  z-index: 9000 !important;
+}
+
+/* Se por algum motivo existir overlay invisível */
+[role="presentation"], .invisible-overlay, .ghost-overlay {
+  display: none !important;
+  pointer-events: none !important;
+}
+/* --- FIX: garantir inputs clicáveis (força) --- */
+html, body, main, .conteudo, .cadastro-container, .prateleira-container, .emprestimos-container {
+  -webkit-app-region: no-drag !important;
+}
+
+/* inputs, textarea, buttons sempre clicáveis */
+input, textarea, button, select, a {
+  pointer-events: auto !important;
+  -webkit-app-region: no-drag !important;
+  position: relative !important;
+  z-index: 9999 !important;
+}
+
+/* remove overlays óbvios */
+.overlay, #overlay, .modal-overlay {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+/* --- FIX: restringe o tamanho das capas na lista de empréstimos --- */
+.emprestimo-item img,
+.livro-item img,
+.recomendacao-card img {
+  width: 80px !important;     /* ajusta conforme preferir */
+  height: 110px !important;
+  object-fit: cover !important;
+  border-radius: 6px;
+}
+
+/* garante que o container dos itens não force imagens grandes */
+.emprestimo-item, .livro-item {
+  max-width: 420px;
+}
+
+/* se houver algum header com z-index gigante cobrindo a tela, reduza */
+.top-bar, header {
+  z-index: 50 !important;
+}
+
+/* Footer/menu deve ficar atrás dos inputs (mas visível) */
+.menu, .rodape {
+  z-index: 100 !important;
+}
+
+body.login-bg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    height: 100vh;
+    padding: 0;
+}

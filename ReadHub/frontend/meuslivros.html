@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meus Livros - ReadHub</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topo">
+    <h1>📚 Cadastro de Livros</h1>
+  </header>
+
+  <main>
+
+  <section class="cadastro-livro">
+    <h2>Adicionar Novo Livro</h2>
+    <input type="text" id="titulo-livro" placeholder="Título do livro" />
+    <input type="text" id="autor-livro" placeholder="Autor" />
+
+    <input type="file" id="file-imagem" accept="image/*" />
+    <input type="text" id="descricao-livro" placeholder="Descrição do livro (opcional)" />
+
+    <button onclick="adicionarLivro()">Adicionar</button>
+  </section>
+
+    <section class="lista-livros">
+      <h2>Livros Cadastrados</h2>
+      <div id="lista-livros"></div>
+    </section>
+  </main>
+
+  <footer class="menu">
+    <button onclick="abrir('perfil.html')">Perfil</button>
+    <button onclick="abrir('prateleira.html')">Minha prateleira</button>
+    <button onclick="abrir('favoritos.html')">Favoritos</button>
+    <button onclick="abrir('emprestimos.html')">Empréstimos</button>
+    <button onclick="abrir('suporte.html')">Suporte</button>
+    <button onclick="abrir('dashboard.html')">Início</button>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

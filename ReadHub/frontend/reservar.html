@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Reservar Livro - ReadHub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <h1>Reservar Livro</h1>
+  </header>
+
+  <main class="reserva-container">
+    <div class="livro-reserva">
+    <img id="reserva-img" src="" alt="Capa do Livro">
+      <h2 id="reserva-titulo">Título do Livro</h2>
+    </div>
+
+    <div class="form-reserva">
+      <label for="data-emprestimo">Data de Empréstimo:</label>
+      <input type="date" id="data-emprestimo">
+
+      <label for="data-devolucao">Data de Devolução:</label>
+      <input type="date" id="data-devolucao">
+
+      <button class="btn-reservar" onclick="confirmarReserva()">Confirmar Reserva</button>
+      <button class="btn-voltar" onclick="abrir('detalhes.html')">Voltar</button>
+    </div>
+  </main>
+
+  <footer class="menu">
+    <button onclick="abrir('perfil.html')">Perfil</button>
+    <button onclick="abrir('estante.html')">Minha prateleira</button>
+    <button onclick="abrir('favoritos.html')">Favoritos</button>
+    <button onclick="abrir('emprestimos.html')">Empréstimos</button>
+    <button onclick="abrir('suporte.html')">Suporte</button>
+    <button onclick="abrir('dashboard.html')">Início</button>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

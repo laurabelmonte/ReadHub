@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Detalhes do Livro - ReadHub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top-bar">
+    <h1>Detalhes do Livro</h1>
+  </header>
+
+  <main class="detalhes-container">
+    <img id="livro-imagem" src="" alt="Capa do Livro">
+    <div class="livro-info">
+      <h2 id="livro-titulo">Título do Livro</h2>
+      <p><strong>Autor:</strong> <span id="livro-autor">(exemplo)</span></p>
+      <p id="livro-descricao">Descrição do livro aparecerá aqui.</p>
+
+      <button class="btn-reservar" onclick="abrir('reservar.html')">Reservar Livro</button>
+    </div>
+  </main>
+
+  <footer class="menu">
+    <button onclick="abrir('perfil.html')">Perfil</button>
+    <button onclick="abrir('prateleira.html')">Minha prateleira</button>
+    <button onclick="abrir('favoritos.html')">Favoritos</button>
+    <button onclick="abrir('emprestimos.html')">Empréstimos</button>
+    <button onclick="abrir('suporte.html')">Suporte</button>
+    <button onclick="abrir('dashboard.html')">Início</button>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

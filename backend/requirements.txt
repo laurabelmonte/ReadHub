@@ -1,0 +1,5 @@
+sqlalchemy
+sqlalchemy-utils
+psycopg2-binary
+fastapi
+fastapi[standard]
