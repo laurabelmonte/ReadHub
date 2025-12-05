@@ -94,3 +94,15 @@ class TicketPublic(TicketBase):
 
 class TicketUpdate(BaseModel):
     status: str
+
+# RELATÓRIOS
+class ReportOverdue(BaseModel):
+    book_title: str
+    user_name: str
+    loan_date: date
+    expected_return_date: date
+    days_overdue: int
+
+class ReportTopBook(BaseModel):
+    book_title: str
+    loan_count: int

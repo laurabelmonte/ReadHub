@@ -49,18 +49,6 @@ button:hover { background-color: var(--primary-dark); }
 a { color: var(--primary); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-/* Top bar / header */
-.top-bar {
-  background-color: var(--primary);
-  color: white;
-  text-align: center;
-  padding: 20px;
-  font-size: 20px;
-  font-weight: bold;
-  position: relative;
-  z-index: 5;
-}
-
 /* Dashboard */
 .dashboard {
   display: flex;
@@ -81,7 +69,7 @@ a:hover { text-decoration: underline; }
 
 .card img { width: 100px; height: 100px; object-fit: contain; }
 
-/* Footer menu */
+/*Footer menu*/
 .menu, .rodape {
   position: fixed;
   left: 0;
@@ -114,6 +102,61 @@ a:hover { text-decoration: underline; }
 
 /* give content spacing from footer */
 main, .conteudo { padding-bottom: 110px; }
+
+/* Atualize a seção .top-bar e .btn-voltar-topo no seu arquivo style.css */
+
+.top-bar {
+    position: relative;        /* Essencial para o botão 'absoluto' funcionar */
+    display: flex;
+    flex-direction: column;    /* Empilha Título e Input (se houver) */
+    align-items: center;       /* Centraliza horizontalmente o h1 e inputs */
+    justify-content: center;   /* Centraliza verticalmente */
+    
+    background-color: var(--primary);
+    color: white;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: bold;
+    z-index: 5;
+    min-height: 80px;
+    text-align: center;        /* Garante que o texto dentro do h1 fique centralizado */
+}
+
+/* Garante que o H1 não fique por cima do botão em telas pequenas */
+.top-bar h1 {
+    margin: 0;
+    width: 100%;
+    padding: 0 50px; /* Adiciona espaço nas laterais para o texto não tocar no botão */
+}
+
+.btn-voltar-topo {
+    /* Posicionamento Absoluto: Tira o botão do fluxo para não empurrar o texto */
+    position: absolute;
+    left: 20px;                /* Cola na esquerda */
+    top: 50%;                  /* Posiciona no meio vertical da barra */
+    transform: translateY(-50%); /* Ajuste fino para ficar exato no centro vertical */
+    
+    /* Visual */
+    background-color: #ffffff;
+    color: #000000;
+    
+    /* Tamanho */
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    border-radius: 50%;
+    border: none;
+    
+    /* Centralizar a seta dentro da bolinha */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+    z-index: 10; 
+}
 
 /* Catalogo */
 .top-bar input[type="text"] {
@@ -174,12 +217,8 @@ main, .conteudo { padding-bottom: 110px; }
 .btn-reservar {
   padding: 12px 22px;
   border-radius: 8px;
-  font-size: 16px;
-  background: var(--primary);
-  color: #fff;
-  border: none;
+  font-size: 16pxng, etc. aqui */
 }
-.btn-reservar:hover { background: var(--primary-dark); }
 
 /* Reserva */
 .reserva-container { padding: 40px; display:flex; flex-direction:column; align-items:center; gap:20px; }

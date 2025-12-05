@@ -1,8 +1,9 @@
 from typing import List, Optional
 from http import HTTPStatus
+from datetime import date
 
 from fastapi import FastAPI, HTTPException, Query
-from sqlalchemy import create_engine, select, desc
+from sqlalchemy import create_engine, select, desc, func
 from sqlalchemy.orm import sessionmaker,joinedload
 
 # Importação dos modelos (tabelas)
@@ -21,7 +22,8 @@ from schemas import (
     BookCreate, BookPublic,
     LoanCreate, LoanPublic, LoanReturn,
     FavoriteCreate, FavoritePublic,
-    TicketCreate, TicketPublic, TicketUpdate
+    TicketCreate, TicketPublic, TicketUpdate,
+    ReportOverdue, ReportTopBook
 )
 
 app = FastAPI()
@@ -331,3 +333,55 @@ def update_ticket_status(ticket_id: int, ticket_data: TicketUpdate):
     db.refresh(ticket)
     db.close()
     return ticket
+
+# ROTAS DE RELATÓRIOS
+@app.get("/reports/overdue", response_model=List[ReportOverdue])
+def get_overdue_loans():
+    db = SessionLocal()
+    today = date.today()
+    
+    overdue_loans = db.scalars(
+        select(Loans)
+        .options(joinedload(Loans.book), joinedload(Loans.user))
+        .where(
+            Loans.status == 'Emprestado', 
+            Loans.expected_return_date < today
+        )
+        .order_by(Loans.expected_return_date)
+    ).all()
+    
+    report_data = []
+    for loan in overdue_loans:
+        days_late = (today - loan.expected_return_date).days
+        report_data.append(ReportOverdue(
+            book_title=loan.book.title,
+            user_name=loan.user.name,
+            loan_date=loan.loan_date,
+            expected_return_date=loan.expected_return_date,
+            days_overdue=days_late
+        ))
+        
+    db.close()
+    return report_data
+
+@app.get("/reports/top-books", response_model=List[ReportTopBook])
+def get_top_books():
+    db = SessionLocal()
+    
+    results = db.execute(
+        select(Books.title, func.count(Loans.id).label("count"))
+        .join(Loans, Books.id == Loans.book_id)
+        .group_by(Books.title)
+        .order_by(desc("count"))
+        .limit(10) # Top 10
+    ).all()
+    
+    report_data = []
+    for row in results:
+        report_data.append(ReportTopBook(
+            book_title=row[0],
+            loan_count=row[1]
+        ))
+        
+    db.close()
+    return report_data

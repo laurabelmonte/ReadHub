@@ -102,6 +102,10 @@ function sair() {
   }
 }
 
+function voltar() {
+    window.history.back();
+}
+
 /* ---------------- Catálogo e Busca ---------------- */
 async function carregarCatalogo() {
   const container = document.getElementById("catalogo");
@@ -660,38 +664,241 @@ async function carregarRecomendacoes() {
     } catch(e) { }
 }
 
-/* ---------------- Relatórios (Front-end processing) ---------------- */
+/* ---------------- Relatórios ---------------- */
+
+// Variáveis globais para armazenar os dados atuais (para o download)
+let dadosRelatorioAtrasos = [];
+let dadosRelatorioTop = [];
+
 async function gerarRelatorioAtrasos() {
     const tabela = document.getElementById('tabela-atrasos');
+    const tbody = tabela.querySelector('tbody');
+    const msg = document.getElementById('msg-atrasos');
+
     if(!tabela) return;
 
     try {
-        const res = await fetch(`${API_URL}/loans`);
-        const loans = await res.json();
+        // Chama a rota específica criada no backend
+        const response = await fetch(`${API_URL}/reports/overdue`);
+        if (!response.ok) throw new Error("Erro ao buscar dados do servidor.");
 
-        const hoje = new Date();
-        const atrasos = loans.filter(l => {
-            if (l.status === 'Devolvido') return false;
-            const prev = new Date(l.expected_return_date);
-            return prev < hoje;
+        dadosRelatorioAtrasos = await response.json();
+        
+        tbody.innerHTML = ""; // Limpa tabela anterior
+
+        if (dadosRelatorioAtrasos.length === 0) {
+            tabela.style.display = 'none';
+            msg.innerText = "Nenhum empréstimo em atraso encontrado.";
+            msg.style.display = 'block';
+            return;
+        }
+
+        // Renderiza as linhas usando os dados do Schema ReportOverdue
+        dadosRelatorioAtrasos.forEach(item => {
+            const row = `
+                <tr>
+                    <td>${item.book_title}</td>
+                    <td>${item.user_name}</td>
+                    <td>${formatDate(item.loan_date)}</td>
+                    <td style="color:red; font-weight:bold;">${formatDate(item.expected_return_date)}</td>
+                    <td>${item.days_overdue} dias</td>
+                </tr>
+            `;
+            tbody.innerHTML += row;
+        });
+        
+        tabela.style.display = 'table';
+        msg.style.display = 'none';
+
+    } catch(e) { 
+        console.error(e);
+        msg.innerText = "Erro ao conectar com o servidor.";
+        msg.style.display = 'block';
+    }
+}
+
+async function gerarTopEmprestados() {
+    const tabela = document.getElementById('tabela-top');
+    const tbody = tabela.querySelector('tbody');
+    const msg = document.getElementById('msg-top');
+
+    if(!tabela) return;
+
+    try {
+        const response = await fetch(`${API_URL}/reports/top-books`);
+        if (!response.ok) throw new Error("Erro ao buscar dados.");
+
+        dadosRelatorioTop = await response.json();
+        
+        tbody.innerHTML = "";
+
+        if (dadosRelatorioTop.length === 0) {
+            tabela.style.display = 'none';
+            msg.innerText = "Nenhum dado de empréstimo encontrado.";
+            msg.style.display = 'block';
+            return;
+        }
+
+        // Renderiza as linhas usando o Schema ReportTopBook
+        dadosRelatorioTop.forEach((item, index) => {
+            const row = `
+                <tr>
+                    <td>#${index + 1}</td>
+                    <td>${item.book_title}</td>
+                    <td>${item.loan_count}</td>
+                </tr>
+            `;
+            tbody.innerHTML += row;
         });
 
-        // Renderiza (similar ao original)
-        const tbody = tabela.querySelector('tbody');
-        tbody.innerHTML = atrasos.map(l => `
-            <tr>
-                <td>${l.book ? l.book.title : l.book_id}</td>
-                <td>User ID: ${l.user_id}</td>
-                <td>${l.loan_date}</td>
-                <td>${l.expected_return_date}</td>
-                <td>ATRASADO</td>
-            </tr>
-        `).join("");
-        
-        tabela.style.display = '';
-        window.__relatorio_atrasos = atrasos; // Para download
+        tabela.style.display = 'table';
+        msg.style.display = 'none';
 
-    } catch(e) { alert("Erro ao gerar relatório"); }
+    } catch (e) {
+        console.error(e);
+        msg.innerText = "Erro ao carregar relatório.";
+        msg.style.display = 'block';
+    }
+}
+
+// --- Funções de Download (CSV e JSON) ---
+
+function baixarRelatorio(tipo) {
+    let dados, filename, headers;
+
+    if (tipo === 'atrasos') {
+        if (dadosRelatorioAtrasos.length === 0) { alert("Gere o relatório primeiro."); return; }
+        dados = dadosRelatorioAtrasos;
+        filename = "relatorio_atrasos.csv";
+        headers = ["Livro", "Usuário", "Data Empréstimo", "Devolução Prevista", "Dias Atraso"];
+    } else {
+        if (dadosRelatorioTop.length === 0) { alert("Gere o relatório primeiro."); return; }
+        dados = dadosRelatorioTop;
+        filename = "relatorio_top_livros.csv";
+        headers = ["Posição", "Livro", "Qtd Empréstimos"];
+    }
+
+    // Converte JSON para CSV
+    const csvRows = [];
+    csvRows.push(headers.join(',')); // Cabeçalho
+
+    for (const row of dados) {
+        const values = Object.values(row).map(val => {
+            const escaped = ('' + val).replace(/"/g, '\\"'); // Escapa aspas
+            return `"${escaped}"`;
+        });
+        csvRows.push(values.join(','));
+    }
+
+    const blob = new Blob([csvRows.join('\n')], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+}
+
+function baixarRelatorioJson(tipo) {
+    let dados, filename;
+    
+    if (tipo === 'atrasos') {
+        dados = dadosRelatorioAtrasos;
+        filename = "relatorio_atrasos.json";
+    } else {
+        dados = dadosRelatorioTop;
+        filename = "relatorio_top.json";
+    }
+
+    if (!dados || dados.length === 0) { alert("Gere o relatório primeiro."); return; }
+
+    const blob = new Blob([JSON.stringify(dados, null, 2)], { type: 'application/json' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+}
+
+function imprimirRelatorio(tipo) {
+    window.print();
+}
+
+/* ---------------- Geração de PDF (jsPDF + AutoTable) ---------------- */
+
+function baixarPDF(tipo) {
+    // Verifica se a biblioteca foi carregada corretamente
+    if (!window.jspdf) {
+        alert("Erro: Biblioteca jsPDF não encontrada.");
+        return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF(); // Cria o documento PDF
+
+    // Configurações comuns (Logo, título, data)
+    const dataAtual = new Date().toLocaleDateString('pt-BR');
+    doc.setFontSize(18);
+    doc.text("ReadHub - Sistema de Gestão", 14, 20);
+    
+    doc.setFontSize(10);
+    doc.text(`Gerado em: ${dataAtual}`, 14, 28);
+
+    if (tipo === 'atrasos') {
+        if (dadosRelatorioAtrasos.length === 0) {
+            alert("Por favor, gere o relatório na tela primeiro.");
+            return;
+        }
+
+        doc.setFontSize(14);
+        doc.text("Relatório de Empréstimos em Atraso", 14, 40);
+
+        // Define as colunas e as linhas baseadas nos dados
+        const colunas = ["Título do Livro", "Usuário", "Data Emp.", "Devolução", "Atraso (dias)"];
+        const linhas = dadosRelatorioAtrasos.map(item => [
+            item.book_title,
+            item.user_name,
+            formatDate(item.loan_date),
+            formatDate(item.expected_return_date),
+            item.days_overdue
+        ]);
+
+        // Gera a tabela
+        doc.autoTable({
+            head: [colunas],
+            body: linhas,
+            startY: 45, // Começa logo após o título
+            theme: 'striped', // Estilo zebrado
+            headStyles: { fillColor: [220, 53, 69] } // Cabeçalho vermelho para alertar atraso
+        });
+
+        doc.save(`relatorio_atrasos_${dataAtual}.pdf`);
+
+    } else if (tipo === 'top') {
+        if (dadosRelatorioTop.length === 0) {
+            alert("Por favor, gere o relatório na tela primeiro.");
+            return;
+        }
+
+        doc.setFontSize(14);
+        doc.text("Top Livros Mais Emprestados", 14, 40);
+
+        const colunas = ["Posição", "Título do Livro", "Qtd. Empréstimos"];
+        const linhas = dadosRelatorioTop.map((item, index) => [
+            `${index + 1}º`,
+            item.book_title,
+            item.loan_count
+        ]);
+
+        doc.autoTable({
+            head: [colunas],
+            body: linhas,
+            startY: 45,
+            theme: 'grid',
+            headStyles: { fillColor: [40, 167, 69] } // Cabeçalho verde
+        });
+
+        doc.save(`relatorio_top_livros_${dataAtual}.pdf`);
+    }
 }
 
 /* ---------------- Inicialização ---------------- */
@@ -710,3 +917,4 @@ window.addEventListener("load", () => {
   if (path.includes("recomendacoes.html")) carregarRecomendacoes();
   if (path.includes("emprestimos.html")) carregarEmprestimos();
 });
+
